@@ -21,6 +21,17 @@
             <span class="sidebar-label">Home Page</span>
         </a>
 
+        <a href="{{ route('admin.about.index') }}"
+           class="{{ $linkBase }} {{ request()->routeIs('admin.about.*') ? $activeClasses : $inactiveClasses }}"
+           title="About">
+            <span class="w-5 h-5 flex items-center justify-center flex-shrink-0">
+                <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="{{ request()->routeIs('admin.about.*') ? '2' : '1.5' }}" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </span>
+            <span class="sidebar-label">About</span>
+        </a>
+
         <a href="{{ route('admin.services.index') }}"
            class="{{ $linkBase }} {{ request()->routeIs('admin.services.*') ? $activeClasses : $inactiveClasses }}"
            title="Services">

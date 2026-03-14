@@ -13,13 +13,23 @@ use App\Http\Controllers\Admin\MissionController as AdminMissionController;
 use App\Http\Controllers\Admin\ProcessController as AdminProcessController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 
 Route::get('/', fn () => view('user.intro'));
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::view('/about', 'user.about')->name('about');
+use App\Models\AboutSetting;
+use App\Models\Mission;
+use App\Models\Process;
+
+Route::get('/about', function () {
+    $about = AboutSetting::firstOrNew(['id' => 1]);
+    $missions = Mission::orderBy('order')->get();
+    $processes = Process::orderBy('order')->get();
+    return view('user.about', compact('about', 'missions', 'processes'));
+})->name('about');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -39,6 +49,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('home/projects/{id}', [AdminHomeController::class, 'updateProject'])->name('home.projects.update');
     Route::delete('home/projects/{id}', [AdminHomeController::class, 'deleteProject'])->name('home.projects.destroy');
     Route::post('home/projects/reorder', [AdminHomeController::class, 'reorderProject'])->name('home.projects.reorder');
+
+    // About Page Management
+    Route::get('about', [AdminAboutController::class, 'index'])->name('about.index');
+    Route::put('about', [AdminAboutController::class, 'update'])->name('about.update');
 
     Route::resource('portfolio', AdminPortfolioController::class);
     Route::resource('services', AdminServiceController::class);
