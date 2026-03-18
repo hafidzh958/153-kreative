@@ -123,14 +123,14 @@
         <div class="rounded-xl bg-white border border-gray-100 shadow-sm p-5">
             <h4 class="text-sm font-semibold text-gray-900 mb-3">Quick Actions</h4>
             <div class="space-y-2">
-                <a href="{{ route('admin.services.create') }}" class="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-gray-100 hover:border-[#f97316]/30 hover:bg-orange-50/50 transition-colors group">
+                <a href="{{ route('admin.services.index') }}" class="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-gray-100 hover:border-[#f97316]/30 hover:bg-orange-50/50 transition-colors group">
                     <span class="text-sm font-medium text-gray-700 group-hover:text-[#f97316]">Tambah Service</span>
                     <svg class="w-4 h-4 text-gray-400 group-hover:text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
                 </a>
-                <a href="{{ route('admin.portfolio.create') }}" class="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-gray-100 hover:border-[#f97316]/30 hover:bg-orange-50/50 transition-colors group">
-                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#f97316]">Tambah Portfolio</span>
+                <a href="{{ route('admin.portfolio.index') }}" class="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-gray-100 hover:border-[#f97316]/30 hover:bg-orange-50/50 transition-colors group">
+                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#f97316]">Kelola Portfolio</span>
                     <svg class="w-4 h-4 text-gray-400 group-hover:text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>

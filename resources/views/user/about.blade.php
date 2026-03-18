@@ -19,18 +19,23 @@
 {{-- 2. Company Story Section --}}
 <section class="py-24 lg:py-32 bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
-        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-square xl:aspect-[4/3] order-1 lg:order-1 transition-transform hover:scale-[1.02] duration-500">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {{-- Image Panel --}}
+            <div class="order-1 lg:order-1 w-full relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-[#fff3ec] to-transparent rounded-2xl transform -translate-x-3 translate-y-3 -z-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500"></div>
                 <img
                     src="{{ $about->story_image ? asset('storage/'.$about->story_image) : 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80' }}"
                     alt="{{ $about->story_title ?? 'Tim 153 Kreatif bekerja' }}"
-                    class="w-full h-full object-cover"
+                    class="w-full h-auto rounded-2xl object-contain shadow-lg border border-gray-100 transition-transform duration-500 group-hover:scale-[1.01]"
+                    style="max-height: 550px;"
                 />
             </div>
+            
+            {{-- Text Content --}}
             <div class="order-2 lg:order-2">
-                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-8" style="font-family: 'Montserrat', sans-serif;">{{ $about->story_title ?? 'Cerita Kami' }}</h2>
-                <div class="w-24 h-1.5 bg-[#ff6a00] mb-10 rounded-full"></div>
-                <div class="space-y-8 text-gray-700 leading-relaxed text-lg sm:text-xl" style="font-family: 'Inter', sans-serif;">
+                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight" style="font-family: 'Montserrat', sans-serif;">{{ $about->story_title ?? 'Cerita Kami' }}</h2>
+                <div class="w-20 h-1.5 bg-[#ff6a00] mb-8 rounded-full"></div>
+                <div class="space-y-6 text-gray-600 leading-relaxed text-lg" style="font-family: 'Inter', sans-serif;">
                     @if(isset($about->story_description) && !empty($about->story_description))
                         {!! nl2br(e($about->story_description)) !!}
                     @else
@@ -53,40 +58,45 @@
 {{-- 3. Vision & Mission Section --}}
 <section class="py-24 lg:py-32 bg-gray-50 border-y border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-12 gap-12 lg:gap-16 scroll-fade">
+        <div class="text-center mb-16 scroll-fade">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" style="font-family: 'Montserrat', sans-serif;">Visi & Misi</h2>
+            <div class="w-16 h-1 bg-[#ff6a00] mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-10 scroll-fade">
             
-            {{-- Vision Card --}}
-            <div class="md:col-span-5 bg-[#fff3ec] p-12 sm:p-16 rounded-3xl shadow-sm relative overflow-hidden group border border-[#ff8c3a]/20 flex flex-col justify-center">
-                <div class="absolute top-0 right-0 p-8 opacity-5 transform group-hover:scale-110 transition-transform duration-700">
-                    <svg class="w-48 h-48 text-[#ff6a00]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            {{-- Vision Card (Konsisten Kiri) --}}
+            <div class="bg-white p-10 sm:p-14 rounded-3xl shadow-lg border-t-4 border-[#ff6a00] relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                <div class="absolute top-0 right-0 p-8 opacity-5 transform group-hover:scale-110 group-hover:opacity-10 transition-all duration-700">
+                    <svg class="w-32 h-32 text-[#ff6a00]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                 </div>
-                <h3 class="text-4xl font-bold text-gray-900 mb-8 relative z-10" style="font-family: 'Montserrat', sans-serif;">Visi</h3>
-                <p class="text-gray-800 text-xl leading-relaxed relative z-10 font-medium" style="font-family: 'Inter', sans-serif;">
+                <h3 class="text-3xl font-bold text-gray-900 mb-6 relative z-10" style="font-family: 'Montserrat', sans-serif;">Visi</h3>
+                <p class="text-gray-600 text-lg leading-relaxed relative z-10" style="font-family: 'Inter', sans-serif;">
                     {{ $about->vision_text ?? 'Menjadi mitra strategis terdepan di industri manajemen acara dan produksi kreatif yang mengintegrasikan inovasi desain visual dengan kesempurnaan eksekusi lapangan.' }}
                 </p>
             </div>
 
-            {{-- Mission Card --}}
-            <div class="md:col-span-7 bg-white p-12 sm:p-16 rounded-3xl shadow-xl border-t-4 border-[#ff6a00] relative overflow-hidden">
-                <h3 class="text-4xl font-bold text-gray-900 mb-10" style="font-family: 'Montserrat', sans-serif;">Misi</h3>
-                <ul class="space-y-8 text-gray-700 text-lg relative z-10" style="font-family: 'Inter', sans-serif;">
+            {{-- Mission Card (Konsisten Kanan) --}}
+            <div class="bg-white p-10 sm:p-14 rounded-3xl shadow-lg border-t-4 border-[#ff6a00] relative overflow-hidden hover:-translate-y-1 transition-transform duration-300">
+                <h3 class="text-3xl font-bold text-gray-900 mb-8" style="font-family: 'Montserrat', sans-serif;">Misi</h3>
+                <ul class="space-y-6 text-gray-600 text-lg" style="font-family: 'Inter', sans-serif;">
                     @forelse($missions as $mission)
-                        <li class="flex items-start gap-5">
-                            <div class="w-8 h-8 mt-1 flex-shrink-0 bg-[#fff3ec] rounded-full flex items-center justify-center text-[#ff6a00]">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        <li class="flex items-start gap-4">
+                            <div class="w-7 h-7 mt-0.5 flex-shrink-0 bg-[#fff3ec] rounded-full flex items-center justify-center text-[#ff6a00]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                             </div>
                             <span class="leading-relaxed">{{ $mission->description }}</span>
                         </li>
                     @empty
-                        <li class="flex items-start gap-5">
-                            <div class="w-8 h-8 mt-1 flex-shrink-0 bg-[#fff3ec] rounded-full flex items-center justify-center text-[#ff6a00]">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        <li class="flex items-start gap-4">
+                            <div class="w-7 h-7 mt-0.5 flex-shrink-0 bg-[#fff3ec] rounded-full flex items-center justify-center text-[#ff6a00]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                             </div>
                             <span class="leading-relaxed">Memberikan solusi pemasaran terpadu melalui pameran otomotif dan aktivasi brand di lokasi strategis.</span>
                         </li>
-                        <li class="flex items-start gap-5">
-                            <div class="w-8 h-8 mt-1 flex-shrink-0 bg-[#fff3ec] rounded-full flex items-center justify-center text-[#ff6a00]">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        <li class="flex items-start gap-4">
+                            <div class="w-7 h-7 mt-0.5 flex-shrink-0 bg-[#fff3ec] rounded-full flex items-center justify-center text-[#ff6a00]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                             </div>
                             <span class="leading-relaxed">Menjamin kualitas produksi material seperti backdrop, neon box, dan konstruksi booth dengan standar tinggi.</span>
                         </li>

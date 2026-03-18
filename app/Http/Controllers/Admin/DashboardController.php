@@ -19,13 +19,13 @@ class DashboardController extends Controller
         $recentPortfolios = Portfolio::latest()->take(5)->get()->map(fn ($p) => (object) [
             'type' => 'portfolio',
             'title' => $p->title,
-            'url' => route('admin.portfolio.edit', $p),
+            'url' => route('admin.portfolio.index'),
             'created_at' => $p->created_at,
         ]);
         $recentServices = Service::latest()->take(5)->get()->map(fn ($s) => (object) [
             'type' => 'service',
             'title' => $s->name,
-            'url' => route('admin.services.edit', $s),
+            'url' => route('admin.services.index'),
             'created_at' => $s->created_at,
         ]);
         $recentActivity = $recentPortfolios->concat($recentServices)

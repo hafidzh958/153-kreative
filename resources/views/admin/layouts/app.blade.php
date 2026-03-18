@@ -83,9 +83,8 @@
         <main class="p-4 sm:p-6">
             <div class="max-w-7xl mx-auto">
                 @if(session('success'))
-                    <div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 flex items-center gap-2">
-                        <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        {{ session('success') }}
+                    <div class="mb-4 flex items-center gap-2 p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 shadow-sm">
+                        <span>{{ session('success') }}</span>
                     </div>
                 @endif
                 @if(session('error'))

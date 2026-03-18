@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service; // Penting: Pastikan Model Service dipanggil di sini
+use App\Models\Service;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
 {
-    /**
-     * Menampilkan daftar semua layanan.
-     */
     public function index(): View
     {
-        // Mengambil semua data dari tabel 'services' melalui Model Service
-        $services = Service::all();
+        $mainServices       = Service::where('is_main', true)->with('features')->orderBy('order')->get();
+        $supportingServices = Service::where('is_main', false)->orderBy('order')->get();
+        $settings           = \App\Models\ServiceSetting::firstOrNew(['id' => 1]);
 
-        // Mengirim data ke view 'user.services'
-        // Pastikan file view kamu ada di resources/views/user/services.blade.php
-        return view('user.services', compact('services'));
+        return view('user.services', compact('mainServices', 'supportingServices', 'settings'));
     }
 }

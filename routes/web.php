@@ -31,12 +31,21 @@ Route::get('/about', function () {
     return view('user.about', compact('about', 'missions', 'processes'));
 })->name('about');
 
-// Admin Routes
+// Admin Auth Routes
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('login', [\App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [\App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login.submit');
+    Route::post('logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
+});
 
-    Route::get('home', [AdminHomeController::class, 'index'])->name('home.index');
-    Route::put('home', [AdminHomeController::class, 'update'])->name('home.update');
+// Admin Protected Routes
+Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.home.index');
+    })->name('dashboard.redirect');
+
+    Route::get('home', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home.index');
+    Route::put('home', [\App\Http\Controllers\Admin\HomeController::class, 'update'])->name('home.update');
     
     // Home Services CRUD
     Route::post('home/services', [AdminHomeController::class, 'storeService'])->name('home.services.store');
@@ -54,10 +63,36 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('about', [AdminAboutController::class, 'index'])->name('about.index');
     Route::put('about', [AdminAboutController::class, 'update'])->name('about.update');
 
-    Route::resource('portfolio', AdminPortfolioController::class);
-    Route::resource('services', AdminServiceController::class);
+    // Portfolio Categories
+    Route::get('portfolio/categories', [\App\Http\Controllers\Admin\PortfolioCategoryController::class, 'index'])->name('portfolio.categories.index');
+    Route::post('portfolio/categories', [\App\Http\Controllers\Admin\PortfolioCategoryController::class, 'store'])->name('portfolio.categories.store');
+    Route::put('portfolio/categories/{id}', [\App\Http\Controllers\Admin\PortfolioCategoryController::class, 'update'])->name('portfolio.categories.update');
+    Route::delete('portfolio/categories/{id}', [\App\Http\Controllers\Admin\PortfolioCategoryController::class, 'destroy'])->name('portfolio.categories.destroy');
+
+    // Portfolio
+    Route::get('portfolio', [AdminPortfolioController::class, 'index'])->name('portfolio.index');
+    Route::post('portfolio', [AdminPortfolioController::class, 'store'])->name('portfolio.store');
+    Route::post('portfolio/reorder', [AdminPortfolioController::class, 'reorder'])->name('portfolio.reorder');
+    Route::put('portfolio/settings', [AdminPortfolioController::class, 'updateSettings'])->name('portfolio.settings.update');
+    Route::put('portfolio/{id}', [AdminPortfolioController::class, 'update'])->name('portfolio.update');
+    Route::delete('portfolio/{id}', [AdminPortfolioController::class, 'destroy'])->name('portfolio.destroy');
+    // Services Management
+    Route::get('services', [AdminServiceController::class, 'index'])->name('services.index');
+    Route::post('services', [AdminServiceController::class, 'store'])->name('services.store');
+    Route::post('services/reorder', [AdminServiceController::class, 'reorder'])->name('services.reorder');
+    Route::put('services/settings', [AdminServiceController::class, 'updateSettings'])->name('services.settings.update');
+    Route::put('services/{service}', [AdminServiceController::class, 'update'])->name('services.update');
+    Route::delete('services/{service}', [AdminServiceController::class, 'destroy'])->name('services.destroy');
+
+    // Service Features CRUD
+    Route::post('services/{service}/features', [AdminServiceController::class, 'storeFeature'])->name('services.features.store');
+    Route::put('services/features/{feature}', [AdminServiceController::class, 'updateFeature'])->name('services.features.update');
+    Route::delete('services/features/{feature}', [AdminServiceController::class, 'destroyFeature'])->name('services.features.destroy');
+
     Route::resource('missions', AdminMissionController::class);
     Route::resource('processes', AdminProcessController::class);
-    Route::resource('contact', AdminContactController::class)->only(['index', 'destroy']);
+    // Contact Page Management
+    Route::get('contact', [AdminContactController::class, 'index'])->name('contact.index');
+    Route::put('contact', [AdminContactController::class, 'update'])->name('contact.update');
     Route::resource('settings', AdminSettingController::class)->only(['index', 'update']);
 });

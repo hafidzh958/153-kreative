@@ -79,36 +79,60 @@
 /* ─── Project Card ──────────────────────────────────────── */
 .project-card {
     position: relative;
-    border-radius: 12px;
+    border-radius: 20px;
     overflow: hidden;
     background: #f3f4f6;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
 }
 
 .project-card:hover {
-    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+    transform: translateY(-6px);
+}
+
+/* Enforce 4:3 aspect ratio — images consistent regardless of source size */
+.project-card .project-img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+    background: #e5e7eb;
 }
 
 .project-image {
     width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 12px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     display: block;
+    transition: transform 0.45s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.07);
+}
+
+/* Blur-load placeholder effect */
+.project-image.img-loading {
+    filter: blur(8px);
+    transform: scale(1.05);
+}
+.project-image.img-loaded {
+    filter: blur(0);
+    transform: scale(1);
+    transition: filter 0.4s ease, transform 0.45s ease;
 }
 
 .project-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.65);
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0) 55%);
     display: flex;
     align-items: flex-end;
     padding: 20px;
     opacity: 0;
     transition: opacity 0.3s ease;
-    border-radius: 12px;
 }
 
 .project-card:hover .project-overlay {
@@ -117,7 +141,7 @@
 
 .project-overlay h3 {
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     margin: 0;
     transform: translateY(8px);

@@ -125,8 +125,6 @@ class AboutController extends Controller
             }
         }
 
-        return redirect()
-            ->route('admin.about.index')
-            ->with('success', 'Seluruh konten halaman About berhasil disimpan.');
+        return redirect()->back()->with('success', 'Konten About berhasil disimpan');
     }
 }

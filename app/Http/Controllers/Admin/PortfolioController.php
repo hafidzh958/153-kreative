@@ -5,99 +5,164 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Portfolio;
-use App\Http\Requests\StorePortfolioRequest;
-use App\Http\Requests\UpdatePortfolioRequest;
+use App\Models\PortfolioCategory;
+use App\Models\PortfolioSetting;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Intervention\Image\Laravel\Facades\Image;
 
 class PortfolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
-        $portfolios = Portfolio::latest()->paginate(10);
+        // Load categories with their portfolios ordered by drag-drop position
+        $categories = PortfolioCategory::with(['portfolios' => function ($q) {
+            $q->orderBy('order');
+        }])->get();
 
-        return view('admin.portfolio.index', compact('portfolios'));
+        $settings = PortfolioSetting::firstOrNew(['id' => 1]);
+
+        return view('admin.portfolio.index', compact('categories', 'settings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
+    public function updateSettings(Request $request)
     {
-        return view('admin.portfolio.create');
-    }
+        $request->validate([
+            'portfolio_hero_title'    => 'required|string',
+            'portfolio_hero_subtitle' => 'nullable|string',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePortfolioRequest $request)
-    {
-        $validated = $request->validated();
+        $settings = PortfolioSetting::firstOrNew(['id' => 1]);
+        $settings->hero_title = $request->portfolio_hero_title;
+        $settings->hero_subtitle = $request->portfolio_hero_subtitle;
+        $settings->save();
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('portfolios', 'public');
+        if ($request->ajax() || $request->expectsJson() || $request->hasHeader('X-Requested-With')) {
+            $request->session()->flash('success', 'Pengaturan teks Portofolio berhasil disimpan.');
+            return response()->json(['success' => true]);
         }
 
-        Portfolio::create($validated);
-
-        return redirect()
-            ->route('admin.portfolio.index')
-            ->with('success', 'Portfolio berhasil ditambahkan.');
+        return back()->with('success', 'Pengaturan teks Portofolio berhasil disimpan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'           => 'nullable|string|max:255',
+            'category_id'     => 'required|exists:portfolio_categories,id',
+            'image'           => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'is_featured'     => 'nullable',
+            'is_show_in_all'  => 'nullable',
+        ]);
+
+        $data = $request->only(['title', 'category_id']);
+        $data['is_show_in_all'] = $request->input('is_show_in_all') == '1';
+
+        // Find max order
+        $data['order'] = Portfolio::max('order') + 1;
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->storeImage($request->file('image'));
+        }
+
+        Portfolio::create($data);
+
+        if ($request->ajax() || $request->expectsJson() || $request->hasHeader('X-Requested-With')) {
+            $request->session()->flash('success', 'Portfolio berhasil ditambahkan.');
+            return response()->json(['success' => true]);
+        }
+        return back()->with('success', 'Portfolio berhasil ditambahkan.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Portfolio $portfolio): View
+    public function update(Request $request, $id)
     {
-        return view('admin.portfolio.edit', compact('portfolio'));
-    }
+        $portfolio = Portfolio::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePortfolioRequest $request, Portfolio $portfolio)
-    {
-        $validated = $request->validated();
+        $request->validate([
+            'title'           => 'nullable|string|max:255',
+            'category_id'     => 'required|exists:portfolio_categories,id',
+            'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'is_featured'     => 'nullable',
+            'is_show_in_all'  => 'nullable',
+        ]);
+
+        $data = $request->only(['title', 'category_id']);
+        $data['is_show_in_all'] = $request->input('is_show_in_all') == '1';
 
         if ($request->hasFile('image')) {
             if ($portfolio->image) {
                 Storage::disk('public')->delete($portfolio->image);
             }
-            $validated['image'] = $request->file('image')->store('portfolios', 'public');
+            $data['image'] = $this->storeImage($request->file('image'));
         }
 
-        $portfolio->update($validated);
+        $portfolio->update($data);
 
-        return redirect()
-            ->route('admin.portfolio.index')
-            ->with('success', 'Portfolio berhasil diperbarui.');
+        if ($request->ajax() || $request->expectsJson() || $request->hasHeader('X-Requested-With')) {
+            $request->session()->flash('success', 'Portfolio berhasil diperbarui.');
+            return response()->json(['success' => true]);
+        }
+        return back()->with('success', 'Portfolio berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Portfolio $portfolio)
+    public function destroy(Request $request, $id)
     {
+        $portfolio = Portfolio::findOrFail($id);
+        
         if ($portfolio->image) {
             Storage::disk('public')->delete($portfolio->image);
         }
 
         $portfolio->delete();
 
-        return redirect()
-            ->route('admin.portfolio.index')
-            ->with('success', 'Portfolio berhasil dihapus.');
+        if ($request->ajax() || $request->expectsJson() || $request->hasHeader('X-Requested-With')) {
+            $request->session()->flash('success', 'Portfolio berhasil dihapus.');
+            return response()->json(['success' => true]);
+        }
+        return back()->with('success', 'Portfolio berhasil dihapus.');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'items' => 'required|array',
+            'items.*.id' => 'required|exists:portfolios,id',
+            'items.*.order' => 'required|integer',
+        ]);
+
+        foreach ($request->items as $item) {
+            Portfolio::where('id', $item['id'])->update(['order' => $item['order']]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Urutan berhasil disimpan.']);
+    }
+
+    /**
+     * Auto-resize & compress image to 1200x900 (4:3) WebP.
+     * Falls back to plain store() if Intervention Image fails.
+     */
+    private function storeImage($file): string
+    {
+        try {
+            $filename = 'portfolio/' . Str::uuid() . '.webp';
+            $path     = storage_path('app/public/' . $filename);
+
+            // Ensure directory exists
+            if (!is_dir(dirname($path))) {
+                mkdir(dirname($path), 0755, true);
+            }
+
+            Image::read($file)
+                ->cover(1200, 900)   // crop & resize to exact 4:3 ratio
+                ->toWebp(80)         // compress to 80%
+                ->save($path);
+
+            return $filename;
+        } catch (\Throwable $e) {
+            // Fallback: store original file unchanged
+            return $file->store('portfolio', 'public');
+        }
     }
 }
+

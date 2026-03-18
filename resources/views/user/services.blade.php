@@ -4,14 +4,14 @@
 
 @push('styles')
 <style>
-
+    @verbatim
     .hover-card-lift {
         transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .hover-card-lift:hover {
-        transform: translateY(-8px);
+        transform: translateY(-6px);
         border-color: #ff6a00;
-        box-shadow: 0 15px 30px -5px rgba(255,106,0,0.15);
+        box-shadow: 0 12px 28px -4px rgba(255,106,0,0.15);
     }
 
     /* Flex Zigzag Layout */
@@ -31,25 +31,70 @@
     }
     .service-row > .service-img,
     .service-row > .service-text {
-        flex: 1;
         width: 100%;
     }
+    @media (min-width: 1024px) {
+        .service-row > .service-text {
+            flex: 0 0 40%;
+        }
+        .service-row > .service-img {
+            flex: 0 0 55%; /* using 55% to leave some auto gap */
+        }
+    }
+
+    /* Supporting Services Grid — centered responsive grid */
+    .supporting-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+        .supporting-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    @media (min-width: 1024px) {
+        .supporting-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    @endverbatim
 </style>
 @endpush
 
 @section('content')
 
+@php
+    $autoIcons = [
+        '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>',
+        '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>',
+        '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>',
+        '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
+        '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>',
+        '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.87V15.13a1 1 0 01-1.447.899L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
+    ];
+@endphp
+
 {{-- 1. Header Section --}}
-<section class="pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-[#ff6a00] to-[#ff8c3a] overflow-hidden relative shadow-inner">
-    {{-- Decorative background element --}}
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+<section class="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden relative shadow-inner">
+    @if(isset($settings) && $settings->hero_image)
+        <img 
+            src="{{ asset('storage/'.$settings->hero_image) }}" 
+            class="absolute inset-0 w-full h-full object-cover object-center"
+            alt="Services Background"
+        >
+        <div class="absolute inset-0 bg-[#ff6a00]/80"></div>
+    @else
+        <div class="absolute inset-0 bg-gradient-to-br from-[#ff6a00] to-[#ff8c3a]"></div>
+    @endif
     
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
         <h1 class="animate-fade-in-up text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
-            Layanan Kami
+            {{ $settings->hero_title ?? 'Layanan Kami' }}
         </h1>
         <p class="animate-fade-in-up delay-1 text-xl sm:text-2xl text-white/90 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family: 'Inter', sans-serif;">
-            Integrated Event Solutions & Creative Production
+            {{ $settings->hero_subtitle ?? 'Integrated Event Solutions & Creative Production' }}
         </p>
     </div>
 </section>
@@ -58,187 +103,100 @@
 <section class="py-16 bg-white border-b border-gray-100">
     <div class="max-w-4xl mx-auto px-4 text-center scroll-fade">
         <p class="text-xl md:text-2xl text-gray-700 leading-relaxed font-medium" style="font-family: 'Inter', sans-serif;">
-            <strong class="text-[#ff6a00]">153 Kreatif</strong> menyediakan solusi event terintegrasi yang mencakup manajemen acara, produksi kreatif, serta penyelenggaraan event komunitas untuk memperkuat kehadiran brand Anda.
+            @if(isset($settings) && $settings->intro_text)
+                {!! nl2br(e($settings->intro_text)) !!}
+            @else
+                <strong class="text-[#ff6a00]">153 Kreatif</strong> menyediakan solusi event terintegrasi yang mencakup manajemen acara, produksi kreatif, serta penyelenggaraan event komunitas untuk memperkuat kehadiran brand Anda.
+            @endif
         </p>
     </div>
 </section>
 
-{{-- 3. Main Services (Zig-Zag) --}}
-
-{{-- Service 1: Automotive (Image Left - Text Right) --}}
-<section class="py-24 lg:py-32 bg-white overflow-hidden">
+{{-- 3. Main Services (Zig-Zag from DB) --}}
+@forelse($mainServices as $index => $service)
+<section class="py-24 lg:py-32 overflow-hidden {{ $index % 2 === 0 ? 'bg-white' : 'bg-[#fff3ec]' }}">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
-        <div class="service-row">
+        <div class="service-row {{ $index % 2 !== 0 ? 'reverse' : '' }}">
             {{-- Image --}}
-            <div class="service-img relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-square group">
-                <img
-                    src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&q=80"
-                    alt="Automotive Exhibition"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+            <div class="service-img flex justify-center items-center group">
+                @if($service->image)
+                    <img
+                        src="{{ asset('storage/'.$service->image) }}"
+                        alt="{{ $service->name }}"
+                        class="max-h-[420px] max-w-[500px] w-auto object-contain rounded-xl shadow-md transition-transform duration-700 group-hover:scale-105"
+                    />
+                @else
+                    <div class="max-h-[420px] max-w-[500px] w-full py-32 bg-gradient-to-br from-orange-50 to-orange-100 flex flex-col items-center justify-center gap-3 rounded-xl shadow-md transition-transform duration-700 group-hover:scale-105">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#ff6a00]/10 rounded-2xl flex items-center justify-center text-[#ff6a00]">
+                            {!! $autoIcons[$index % count($autoIcons)] !!}
+                        </div>
+                        <span class="text-sm text-orange-300 font-medium">{{ $service->name }}</span>
+                    </div>
+                @endif
             </div>
+
             {{-- Text --}}
-            <div class="service-text">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-[#fff3ec] rounded-2xl mb-6 text-[#ff6a00]">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <div class="service-text space-y-4">
+                <div class="inline-flex items-center justify-center w-10 h-10 opacity-80 {{ $index % 2 !== 0 ? 'bg-white shadow-sm' : 'bg-[#fff3ec]' }} rounded-xl text-[#ff6a00]">
+                    {!! str_replace('w-7 h-7', 'w-5 h-5', $autoIcons[$index % count($autoIcons)]) !!}
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style="font-family: 'Montserrat', sans-serif;">Automotive Exhibition & Mall Activation</h2>
-                <div class="w-20 h-1.5 bg-[#ff6a00] mb-6 rounded-full"></div>
-                <p class="text-gray-700 leading-relaxed text-lg mb-6" style="font-family: 'Inter', sans-serif;">
-                    Kami mengelola pameran otomotif untuk dealer resmi di pusat perbelanjaan dengan strategi penempatan lokasi yang tepat serta pengelolaan display kendaraan yang menarik perhatian pengunjung.
-                </p>
-                <ul class="space-y-4 text-gray-700 text-lg" style="font-family: 'Inter', sans-serif;">
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-[#ff6a00] rounded-full flex items-center justify-center text-white shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <h2 class="text-2xl font-semibold text-gray-900" style="font-family: 'Montserrat', sans-serif;">{{ $service->name }}</h2>
+                <div class="w-16 h-1 bg-[#ff6a00] rounded-full"></div>
+                @if($service->description)
+                    <p class="text-sm text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">
+                        {{ $service->description }}
+                    </p>
+                @endif
+
+                @if($service->features->count())
+                <ul class="space-y-3 text-sm text-gray-600 mt-2" style="font-family: 'Inter', sans-serif;">
+                    @foreach($service->features as $feature)
+                    <li class="flex items-start gap-3">
+                        <div class="w-5 h-5 mt-0.5 flex-shrink-0 {{ $index % 2 !== 0 ? 'bg-white border text-[#ff6a00]' : 'bg-[#ff6a00] text-white shadow-sm' }} rounded-full flex items-center justify-center">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
                         </div>
-                        <span>Manajemen perizinan dan koordinasi lokasi strategis</span>
+                        <span>{{ $feature->text }}</span>
                     </li>
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-[#ff6a00] rounded-full flex items-center justify-center text-white shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Penataan display kendaraan yang menarik perhatian pengunjung</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-[#ff6a00] rounded-full flex items-center justify-center text-white shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Aktivasi brand di area pameran</span>
-                    </li>
+                    @endforeach
                 </ul>
+                @endif
             </div>
         </div>
     </div>
 </section>
-
-{{-- Service 2: Creative Production (Text Left - Image Right using .reverse) --}}
-<section class="py-24 lg:py-32 bg-[#fff3ec] overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
-        <div class="service-row reverse">
-            {{-- Image --}}
-            <div class="service-img relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-square group">
-                <img
-                    src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80"
-                    alt="Creative Stage Production"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-            </div>
-            {{-- Text --}}
-            <div class="service-text">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl mb-6 text-[#ff6a00] shadow-sm">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
-                </div>
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style="font-family: 'Montserrat', sans-serif;">Creative Production (In-House)</h2>
-                <div class="w-20 h-1.5 bg-[#ff6a00] mb-6 rounded-full"></div>
-                <p class="text-gray-800 leading-relaxed text-lg mb-6" style="font-family: 'Inter', sans-serif;">
-                    Kami memiliki unit produksi internal yang memungkinkan kami memastikan kualitas material event dengan standar tinggi serta ketepatan waktu pengerjaan.
-                </p>
-                <ul class="space-y-4 text-gray-800 text-lg font-medium" style="font-family: 'Inter', sans-serif;">
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-white border-2 border-[#ff6a00] rounded-full flex items-center justify-center text-[#ff6a00]">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Backdrop & Stage Production</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-white border-2 border-[#ff6a00] rounded-full flex items-center justify-center text-[#ff6a00]">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Signage & Neon Box</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-white border-2 border-[#ff6a00] rounded-full flex items-center justify-center text-[#ff6a00]">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Booth Construction</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+@empty
+<section class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <p class="text-gray-400 text-lg">Konten layanan sedang dipersiapkan.</p>
     </div>
 </section>
+@endforelse
 
-{{-- Service 3: Community (Image Left - Text Right) --}}
-<section class="py-24 lg:py-32 bg-white overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
-        <div class="service-row">
-            {{-- Image --}}
-            <div class="service-img relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-square group">
-                <img
-                    src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80"
-                    alt="Community Festival Event"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-            </div>
-            {{-- Text --}}
-            <div class="service-text">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-[#fff3ec] rounded-2xl mb-6 text-[#ff6a00]">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                </div>
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style="font-family: 'Montserrat', sans-serif;">Community & Public Events</h2>
-                <div class="w-20 h-1.5 bg-[#ff6a00] mb-6 rounded-full"></div>
-                <p class="text-gray-700 leading-relaxed text-lg mb-6" style="font-family: 'Inter', sans-serif;">
-                    Kami berpengalaman dalam mengelola acara publik dan komunitas dengan sistem manajemen event yang profesional serta pengelolaan kerumunan yang terorganisir.
-                </p>
-                <ul class="space-y-4 text-gray-700 text-lg" style="font-family: 'Inter', sans-serif;">
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-[#ff6a00] rounded-full flex items-center justify-center text-white shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Sport Events seperti fun run dan kompetisi olahraga</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-[#ff6a00] rounded-full flex items-center justify-center text-white shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Bazaar & UMKM Expo</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <div class="w-6 h-6 mt-1 flex-shrink-0 bg-[#ff6a00] rounded-full flex items-center justify-center text-white shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span>Festival komunitas</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- 4. Additional Services Grid --}}
+{{-- 4. Supporting Services Grid --}}
+@if($supportingServices->count())
 <section class="py-24 lg:py-32 bg-gray-50 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6" style="font-family: 'Montserrat', sans-serif;">Layanan Pendukung Lainnya</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style="font-family: 'Montserrat', sans-serif;">Layanan Pendukung Lainnya</h2>
             <div class="w-16 h-1.5 bg-[#ff6a00] mx-auto rounded-full"></div>
         </div>
 
-        @php
-        $minorServices = [
-            'Event Planning',
-            'Brand Activation',
-            'Booth Construction',
-            'Stage Production',
-            '3D Event Visualization',
-            'Community Event Management'
-        ];
-        @endphp
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($minorServices as $s)
-            <div class="hover-card-lift bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center text-center">
-                <h4 class="text-xl font-bold text-gray-800" style="font-family: 'Montserrat', sans-serif;">{{ $s }}</h4>
+        <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
+            @foreach($supportingServices as $s)
+            <div class="w-[220px] bg-white border border-gray-100 rounded-xl p-5 flex items-center justify-center text-center shadow-sm hover:shadow-md hover:border-orange-400 transition-all duration-300 min-h-[80px]">
+                <h4 class="text-base font-semibold text-gray-800 leading-snug" style="font-family: 'Montserrat', sans-serif;">{{ $s->name }}</h4>
             </div>
             @endforeach
         </div>
     </div>
 </section>
+@endif
 
 {{-- 5. Call To Action Section --}}
 <section class="py-24 lg:py-32 bg-gradient-to-r from-[#ff6a00] to-[#ff8c3a] shadow-inner relative overflow-hidden">
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-    
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center scroll-fade">
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
             Let's Create Your Next Event With 153 Kreatif

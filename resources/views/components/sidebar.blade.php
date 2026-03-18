@@ -1,7 +1,7 @@
 <aside id="admin-sidebar" class="fixed md:relative inset-y-0 left-0 z-50 md:z-auto w-64 md:w-60 -translate-x-full md:translate-x-0 flex flex-col border-r border-gray-200 bg-gray-50 md:bg-gray-50/80 min-h-screen py-5 transition-transform duration-200 ease-out md:transition-none">
     {{-- Logo --}}
     <div class="px-4 mb-6">
-        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-2 py-1.5 -mx-2 rounded-lg hover:bg-white/60 transition-colors">
+        <a href="{{ route('admin.home.index') }}" class="flex items-center gap-3 px-2 py-1.5 -mx-2 rounded-lg hover:bg-white/60 transition-colors">
             <div class="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 bg-white shadow-sm">
                 <img src="{{ asset('images/logo-153.png') }}" alt="153 Kreatif" class="h-8 w-auto object-contain">
             </div>
@@ -20,11 +20,11 @@
             $inactiveClasses = 'text-gray-600 hover:bg-white hover:text-gray-900';
         @endphp
 
-        <a href="{{ route('admin.dashboard') }}"
-           class="{{ $linkBase }} {{ request()->routeIs('admin.dashboard') ? $activeClasses : $inactiveClasses }}">
+        <a href="{{ route('admin.home.index') }}"
+           class="{{ $linkBase }} {{ request()->routeIs('admin.home.index') ? $activeClasses : $inactiveClasses }}">
             <span class="w-5 h-5 flex items-center justify-center flex-shrink-0">
                 <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="{{ request()->routeIs('admin.dashboard') ? '2' : '1.5' }}" d="M3 12l2-2m0 0l7-7 7 7M5 10v10h5m4 0h5V10m-9 10v-4a1 1 0 011-1h2a1 1 0 011 1v4"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="{{ request()->routeIs('admin.home.index') ? '2' : '1.5' }}" d="M3 12l2-2m0 0l7-7 7 7M5 10v10h5m4 0h5V10m-9 10v-4a1 1 0 011-1h2a1 1 0 011 1v4"/>
                 </svg>
             </span>
             <span>Dashboard</span>

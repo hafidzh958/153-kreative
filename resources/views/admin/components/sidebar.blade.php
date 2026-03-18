@@ -11,14 +11,14 @@
 
         <a href="{{ route('admin.home.index') }}"
            class="{{ $linkBase }} {{ request()->routeIs('admin.home.*') ? $activeClasses : $inactiveClasses }}"
-           title="Home Page">
+           title="Home">
             <span class="w-5 h-5 flex items-center justify-center flex-shrink-0">
                 <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="{{ request()->routeIs('admin.home.*') ? '2' : '1.5' }}" d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="{{ request()->routeIs('admin.home.*') ? '2' : '1.5' }}" d="M9 21V12h6v9"/>
                 </svg>
             </span>
-            <span class="sidebar-label">Home Page</span>
+            <span class="sidebar-label">Home</span>
         </a>
 
         <a href="{{ route('admin.about.index') }}"
@@ -68,7 +68,7 @@
     </nav>
 
     {{-- Footer --}}
-    <div class="px-2 py-3 border-t border-gray-200 flex-shrink-0">
+    <div class="px-2 py-3 border-t border-gray-200 flex-shrink-0 flex flex-col gap-1">
         <a href="{{ route('home') }}" target="_blank" title="Lihat Website"
            class="sidebar-link sidebar-footer-label flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-500 hover:bg-white hover:text-[#f97316] transition-colors group">
             <span class="w-5 h-5 flex items-center justify-center flex-shrink-0">
@@ -78,5 +78,18 @@
             </span>
             <span class="sidebar-label">Lihat Website</span>
         </a>
+
+        <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
+            @csrf
+            <button type="submit" title="Keluar"
+                    class="w-full sidebar-link sidebar-footer-label flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors group">
+                <span class="w-5 h-5 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </span>
+                <span class="sidebar-label">Keluar</span>
+            </button>
+        </form>
     </div>
 </aside>

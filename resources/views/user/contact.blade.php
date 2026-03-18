@@ -1,176 +1,178 @@
 @extends('layouts.app')
 
-@section('title', 'Hubungi Kami - 153 Kreatif')
+@section('title', ($contact->hero_title ?? 'Hubungi Kami') . ' - 153 Kreatif')
 
 @push('styles')
 <style>
+    /* ── Blobs ── */
+    .blob { position:absolute; filter:blur(80px); z-index:0; opacity:0.4; }
+    .blob-1 { background:#ff8c3a; width:300px; height:300px; border-radius:50%; top:-100px; right:-50px; }
+    .blob-2 { background:#ff6a00; width:250px; height:250px; border-radius:50%; bottom:-50px; left:-50px; }
 
-    /* Contact Cards */
-    .contact-card {
-        border-radius: 16px;
-        background-color: #ffffff;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* ── Contact Info Cards ── */
+    .info-card {
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    .contact-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    .info-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12);
     }
-    
-    .contact-icon-bg {
+    .info-icon-bg {
         background-color: #fff3ec;
         color: #ff6a00;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .info-card:hover .info-icon-bg {
+        background-color: #ff6a00;
+        color: #fff;
     }
 
-    .contact-card:hover .contact-icon-bg {
-        background-color: #ff6a00;
-        color: #ffffff;
+    /* ── CTA Card ── */
+    .cta-card {
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.09);
+        transition: transform 0.3s ease;
     }
 
-    /* Floating blobs for Header */
-    .blob {
-        position: absolute;
-        filter: blur(80px);
-        z-index: 0;
-        opacity: 0.4;
+    /* ── WA Button ── */
+    .btn-wa {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%; padding: 16px 28px;
+        background: #25D366; color: #fff;
+        border-radius: 50px; font-weight: 700; font-size: 1.05rem;
+        transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+        box-shadow: 0 6px 24px rgba(37,211,102,0.35);
     }
-    .blob-1 {
-        background-color: #ff8c3a;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        top: -100px;
-        right: -50px;
+    .btn-wa:hover { background: #1eba58; transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,211,102,0.45); }
+
+    /* ── Email Button ── */
+    .btn-email {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%; padding: 16px 28px;
+        background: #fff; color: #374151;
+        border: 2px solid #e5e7eb; border-radius: 50px; font-weight: 700; font-size: 1.05rem;
+        transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    .blob-2 {
-        background-color: #ff6a00;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        bottom: -50px;
-        left: -50px;
-    }
+    .btn-email:hover { background: #f9fafb; border-color: #d1d5db; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
 </style>
 @endpush
 
 @section('content')
 
-{{-- 1. Contact Header Section --}}
+{{-- 1. HERO --}}
 <section class="pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-[#fff3ec] to-[#ffe6d6] overflow-hidden relative shadow-inner">
-    {{-- Decorative Background Elements --}}
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
-    
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <h1 class="animate-fade-in-up text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
-            Hubungi Kami
+        <h1 class="animate-fade-in-up text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 drop-shadow-sm" style="font-family:'Montserrat',sans-serif;">
+            {{ $contact->hero_title ?? 'Hubungi Kami' }}
         </h1>
-        <p class="animate-fade-in-up delay-1 text-xl sm:text-2xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family: 'Inter', sans-serif;">
-            Kami siap membantu mewujudkan event dan aktivasi brand Anda. Silakan hubungi tim kami untuk berdiskusi lebih lanjut.
-        </p>
+        @if($contact->hero_subtitle)
+            <p class="animate-fade-in-up delay-1 text-xl sm:text-2xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family:'Inter',sans-serif;">
+                {{ $contact->hero_subtitle }}
+            </p>
+        @endif
     </div>
 </section>
 
-{{-- 2. Contact Information Section --}}
-<section class="py-24 lg:py-32 bg-[#f9fafb] relative -mt-10 lg:-mt-16 z-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            {{-- Card 1: Alamat --}}
-            <div class="contact-card p-8 text-center scroll-fade">
-                <div class="contact-icon-bg w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3" style="font-family: 'Montserrat', sans-serif;">Alamat</h3>
-                <p class="text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">
-                    Jl. Contoh Alamat No.123<br>
-                    Jakarta, Indonesia
-                </p>
-            </div>
-
-            {{-- Card 2: Email --}}
-            <div class="contact-card p-8 text-center scroll-fade delay-1">
-                <div class="contact-icon-bg w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3" style="font-family: 'Montserrat', sans-serif;">Email</h3>
-                <p class="text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">
-                    <a href="mailto:hello@153kreatif.com" class="hover:text-[#ff6a00] transition-colors">hello@153kreatif.com</a>
-                </p>
-            </div>
-
-            {{-- Card 3: Telepon --}}
-            <div class="contact-card p-8 text-center scroll-fade delay-2">
-                <div class="contact-icon-bg w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3" style="font-family: 'Montserrat', sans-serif;">Telepon / WhatsApp</h3>
-                <p class="text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">
-                    +62 812 3456 7890
-                </p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-{{-- 3. Contact Form Section --}}
+{{-- 2. CTA + CONTACT CARD (2-column) --}}
 <section class="py-24 lg:py-32 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            
-            {{-- Form Intro Content --}}
+        <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+
+            {{-- KIRI: Teks CTA --}}
             <div class="scroll-fade">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight" style="font-family: 'Montserrat', sans-serif;">
-                    Punya ide brilian? <br>
-                    <span class="text-[#ff6a00]">Mari bicarakan.</span>
-                </h2>
-                <p class="text-lg text-gray-600 mb-8 leading-relaxed" style="font-family: 'Inter', sans-serif;">
-                    Kirimkan detail kebutuhan acara atau kampanye Anda. Tim ahli dari 153 Kreatif siap berdiskusi untuk mencapai objektif brand Anda.
-                </p>
-                
-                {{-- Decorative image or graphic --}}
-                <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 mt-10">
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80" alt="Meeting 153 Kreatif" class="w-full h-64 object-cover">
+                @if($contact->cta_title)
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight" style="font-family:'Montserrat',sans-serif;">
+                        {{ $contact->cta_title }}
+                        @if($contact->cta_description)
+                            <br><span class="text-[#ff6a00]">{{ Str::words($contact->cta_description, 4, '') }}</span>
+                        @endif
+                    </h2>
+                    @if($contact->cta_description)
+                        <p class="text-lg text-gray-600 leading-relaxed" style="font-family:'Inter',sans-serif;">
+                            {{ $contact->cta_description }}
+                        </p>
+                    @endif
+                @else
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight" style="font-family:'Montserrat',sans-serif;">
+                        Punya Ide Brilian?<br>
+                        <span class="text-[#ff6a00]">Mari bicarakan.</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed" style="font-family:'Inter',sans-serif;">
+                        Tim ahli dari 153 Kreatif siap berdiskusi untuk mewujudkan event dan aktivasi brand Anda.
+                    </p>
+                @endif
+
+                {{-- Info singkat di bawah teks --}}
+                <div class="mt-10 flex flex-col gap-3">
+                    @if($contact->whatsapp)
+                        <div class="flex items-center gap-3 text-gray-600" style="font-family:'Inter',sans-serif;">
+                            <div class="w-9 h-9 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            </div>
+                            <span class="font-medium">+{{ $contact->whatsapp }}</span>
+                        </div>
+                    @endif
+                    @if($contact->email)
+                        <div class="flex items-center gap-3 text-gray-600" style="font-family:'Inter',sans-serif;">
+                            <div class="w-9 h-9 bg-orange-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                            <span class="font-medium">{{ $contact->email }}</span>
+                        </div>
+                    @endif
+                    @if($contact->address)
+                        <div class="flex items-start gap-3 text-gray-600" style="font-family:'Inter',sans-serif;">
+                            <div class="w-9 h-9 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                            <span class="leading-relaxed">{{ $contact->address }}</span>
+                        </div>
+                    @endif
                 </div>
             </div>
 
-            {{-- WhatsApp Contact Card (Replaced Form) --}}
-            <div class="bg-white p-8 lg:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 scroll-fade delay-1 text-center h-full flex flex-col justify-center min-h-[400px]">
+            {{-- KANAN: Contact Card --}}
+            <div class="cta-card p-8 lg:p-10 scroll-fade delay-1 text-center flex flex-col justify-center min-h-[380px]">
                 <div class="w-20 h-20 bg-[#fff3ec] rounded-full flex items-center justify-center mx-auto mb-6 text-[#ff6a00]">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                     </svg>
                 </div>
-                
-                <h3 class="text-3xl font-bold text-gray-900 mb-4" style="font-family: 'Montserrat', sans-serif;">Hubungi Kami</h3>
-                <p class="text-lg text-gray-600 mb-10 leading-relaxed font-medium" style="font-family: 'Inter', sans-serif;">
+                <h3 class="text-2xl font-bold text-gray-900 mb-3" style="font-family:'Montserrat',sans-serif;">Hubungi Kami</h3>
+                <p class="text-gray-500 mb-8 leading-relaxed" style="font-family:'Inter',sans-serif;">
                     Diskusikan kebutuhan event, pameran, atau aktivasi brand Anda langsung dengan tim kami.
                 </p>
-                
+
                 <div class="flex flex-col gap-4">
-                    <a href="https://wa.me/6285711376797" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full bg-[#25D366] text-white py-4 px-8 rounded-full font-bold text-lg hover:bg-[#20ba56] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1" style="font-family: 'Montserrat', sans-serif;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="mr-3" viewBox="0 0 16 16">
+                    {{-- WhatsApp Button (Dynamic) --}}
+                    @php
+                        $waNumber  = $contact->whatsapp ?? '6285711376797';
+                        $waMessage = $contact->whatsapp_message ?? 'Halo, saya ingin menanyakan tentang layanan 153 Kreatif.';
+                        $waUrl     = 'https://wa.me/' . $waNumber . '?text=' . urlencode($waMessage);
+                    @endphp
+                    <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="btn-wa" style="font-family:'Montserrat',sans-serif;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
                         </svg>
                         Chat via WhatsApp
                     </a>
-                    <a href="mailto:hello@153kreatif.com" class="flex items-center justify-center w-full bg-white text-gray-700 py-4 px-8 rounded-full font-bold text-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1" style="font-family: 'Montserrat', sans-serif;">
-                        <svg class="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                        Kirim Email
-                    </a>
+
+                    {{-- Email Button (Dynamic) --}}
+                    @if($contact->email)
+                        <a href="mailto:{{ $contact->email }}" class="btn-email" style="font-family:'Montserrat',sans-serif;">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Kirim Email
+                        </a>
+                    @endif
                 </div>
             </div>
 
@@ -178,42 +180,135 @@
     </div>
 </section>
 
-{{-- 4. Google Map Section --}}
-<section class="pb-24 lg:pb-32 bg-white relative">
+{{-- 3. INFO CARDS (3 kolom horizontal, di bawah CTA) --}}
+@if($contact->address || $contact->email || $contact->phone || $contact->whatsapp)
+<section class="pb-24 lg:pb-32 bg-[#f9fafb]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {{-- Card: Alamat --}}
+            @if($contact->address)
+            <div class="info-card p-7 text-center scroll-fade">
+                <div class="info-icon-bg w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-5">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 mb-2" style="font-family:'Montserrat',sans-serif;">Alamat</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" style="font-family:'Inter',sans-serif;">{{ $contact->address }}</p>
+            </div>
+            @endif
+
+            {{-- Card: Email --}}
+            @if($contact->email)
+            <div class="info-card p-7 text-center scroll-fade delay-1">
+                <div class="info-icon-bg w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-5">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 mb-2" style="font-family:'Montserrat',sans-serif;">Email</h3>
+                <p class="text-sm" style="font-family:'Inter',sans-serif;">
+                    <a href="mailto:{{ $contact->email }}" class="text-gray-500 hover:text-[#ff6a00] transition-colors">{{ $contact->email }}</a>
+                </p>
+            </div>
+            @endif
+
+            {{-- Card: Telepon / WhatsApp --}}
+            @if($contact->phone || $contact->whatsapp)
+            <div class="info-card p-7 text-center scroll-fade delay-2">
+                <div class="info-icon-bg w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-5">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 mb-2" style="font-family:'Montserrat',sans-serif;">Telepon / WhatsApp</h3>
+                <p class="text-gray-500 text-sm" style="font-family:'Inter',sans-serif;">
+                    @if($contact->phone){{ $contact->phone }}<br>@endif
+                    @if($contact->whatsapp)+{{ $contact->whatsapp }}@endif
+                </p>
+            </div>
+            @endif
+
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- 4. MAP (tampil jika ada latitude/longitude ATAU map_link) --}}
+@if($contact->latitude && $contact->longitude || $contact->map_link)
+<section class="pb-24 lg:pb-32 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10 scroll-fade">
-            <h2 class="text-3xl font-bold text-gray-900" style="font-family: 'Montserrat', sans-serif;">Lokasi Kami</h2>
+            <h2 class="text-3xl font-bold text-gray-900" style="font-family:'Montserrat',sans-serif;">Lokasi Kami</h2>
             <div class="w-16 h-1 bg-[#ff6a00] mx-auto mt-4 rounded-full"></div>
         </div>
-        
-        <div class="rounded-3xl overflow-hidden shadow-xl border border-gray-100 bg-gray-50 h-[450px] relative scroll-fade">
-            {{-- Embedded Google Maps Iframe --}}
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.24036069902!2d106.7594770425686!3d-6.229746400000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-                width="100%" 
-                height="100%" 
-                style="border:0; filter: grayscale(20%) contrast(110%);" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+
+        @php
+            // Prioritas 1: lat/lng → embed langsung
+            // Prioritas 2: map_link google.com/maps → coba embed
+            // Fallback: tampilkan placeholder + tombol saja
+            $embedSrc = null;
+            $openUrl   = $contact->map_link ?? null;
+
+            if ($contact->latitude && $contact->longitude) {
+                $embedSrc = 'https://www.google.com/maps?q=' . $contact->latitude . ',' . $contact->longitude . '&output=embed';
+                // Jika tidak ada map_link, buat link buka maps dari lat/lng
+                if (!$openUrl) {
+                    $openUrl = 'https://www.google.com/maps?q=' . $contact->latitude . ',' . $contact->longitude;
+                }
+            } elseif ($contact->map_link && str_contains($contact->map_link, 'google.com/maps')) {
+                $sep      = str_contains($contact->map_link, '?') ? '&' : '?';
+                $embedSrc = $contact->map_link . $sep . 'output=embed';
+            }
+        @endphp
+
+        <div class="scroll-fade">
+            @if($embedSrc)
+                {{-- Embedded Map iframe --}}
+                <div class="overflow-hidden shadow-xl border border-gray-100 mb-6"
+                     style="border-radius:20px; height:440px;">
+                    <iframe
+                        src="{{ $embedSrc }}"
+                        width="100%" height="100%"
+                        style="border:0; filter:grayscale(10%) contrast(108%);"
+                        allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            @else
+                {{-- Placeholder (short link yang tidak bisa di-embed) --}}
+                <div class="overflow-hidden shadow-xl border border-gray-100 mb-6 bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center"
+                     style="border-radius:20px; height:260px;">
+                    <div class="w-16 h-16 bg-[#fff3ec] rounded-full flex items-center justify-center mb-5 text-[#ff6a00]">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600 font-semibold mb-1" style="font-family:'Montserrat',sans-serif;">Temukan Lokasi Kami</p>
+                    <p class="text-gray-400 text-sm" style="font-family:'Inter',sans-serif;">Klik tombol di bawah untuk membuka Google Maps</p>
+                </div>
+            @endif
+
+            {{-- Tombol Buka di Google Maps --}}
+            @if($openUrl)
+                <div class="text-center">
+                    <a href="{{ $openUrl }}" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-[#ff6a00] text-white font-bold rounded-full hover:bg-[#e55f00] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform"
+                       style="font-family:'Montserrat',sans-serif;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Buka di Google Maps
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 </section>
-
-{{-- 5. Final CTA Section --}}
-<section class="py-24 lg:py-32 bg-gradient-to-r from-[#ff6a00] to-[#ff8c3a] shadow-inner relative overflow-hidden">
-    {{-- Decorative element --}}
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-    
-    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center scroll-fade">
-        <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
-            Siap Membuat Event Anda Lebih Berkesan?
-        </h2>
-        <a href="#name" class="inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-2 transform text-xl" style="font-family: 'Montserrat', sans-serif;">
-            Diskusikan Proyek Anda
-        </a>
-    </div>
-</section>
+@endif
 
 @endsection

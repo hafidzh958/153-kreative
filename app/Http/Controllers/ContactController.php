@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\ContactSetting;
 
 class ContactController extends Controller
 {
-    /**
-     * Tampilkan halaman contact di sisi user.
-     */
     public function index(): View
     {
-        return view('user.contact');
+        $contact = ContactSetting::firstOrNew(['id' => 1]);
+        return view('user.contact', compact('contact'));
     }
 }
