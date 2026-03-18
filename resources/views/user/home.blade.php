@@ -3,32 +3,6 @@
 @section('title', 'Home - 153 Creative')
 
 @push('styles')
-<style>
-    .hover-lift {
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .hover-lift:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
-    }
-    .gallery-item {
-        overflow: hidden;
-        border-radius: 0.5rem;
-    }
-    .gallery-item img {
-        transition: transform 0.4s ease;
-    }
-    .gallery-item:hover img {
-        transform: scale(1.06);
-    }
-    .gallery-item .overlay {
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    .gallery-item:hover .overlay {
-        opacity: 1;
-    }
-</style>
 @endpush
 
 @section('content')
@@ -58,7 +32,7 @@
         @endif
         <a
             href="{{ $home->hero_button_link ?? route('portfolio') }}"
-            class="animate-fade-in-up delay-3 inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full hover:bg-gray-50 hover:shadow-2xl transition-all hover:-translate-y-1 duration-300 text-lg shadow-lg"
+            class="animate-fade-in-up delay-3 inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full text-lg shadow-md transition duration-300 hover:scale-105 hover:shadow-lg"
             style="font-family: 'Montserrat', sans-serif;"
         >
             {{ $home->hero_button_text ?? 'View Portfolio' }}
@@ -83,7 +57,7 @@
                 <img
                     src="{{ ($home && $home->about_image) ? asset('storage/'.$home->about_image) : 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80' }}"
                     alt="Event production"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
@@ -100,12 +74,12 @@
         <p class="text-gray-600 text-center max-w-2xl mx-auto mb-14 text-lg" style="font-family: 'Inter', sans-serif;">Solusi terpadu dari konsep hingga eksekusi</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($services as $service)
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="bi bi-briefcase"></i>
+            <div class="service-card p-6 bg-white rounded-xl shadow-md transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
+                <div class="service-icon mb-4">
+                    <i class="bi bi-briefcase text-3xl text-[#ff6a00]"></i>
                 </div>
-                <h4>{{ $service->name }}</h4>
-                <p>{{ \Illuminate\Support\Str::limit($service->description, 120) }}</p>
+                <h4 class="text-xl font-bold mb-3" style="font-family: 'Montserrat', sans-serif;">{{ $service->name }}</h4>
+                <p class="text-gray-600 leading-relaxed">{{ \Illuminate\Support\Str::limit($service->description, 120) }}</p>
             </div>
             @endforeach
         </div>
@@ -132,13 +106,13 @@
         {{-- Grid: 3 kolom, center jika tidak kelipatan 3 --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
             @foreach($projects as $project)
-            <div class="project-card w-full">
-                <div class="project-img-wrap">
+            <div class="project-card w-full rounded-2xl overflow-hidden group shadow-md transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
+                <div class="project-img-wrap relative aspect-[4/3] overflow-hidden">
                     @if($project->image)
                         <img
                             src="{{ asset('storage/'.$project->image) }}"
                             alt="{{ $project->title ?? 'Project' }}"
-                            class="project-image img-loading"
+                            class="project-image img-loading w-full h-full object-cover transition duration-500 group-hover:scale-110"
                             loading="lazy"
                             onerror="this.src='/images/fallback.jpg'"
                             onload="this.classList.remove('img-loading'); this.classList.add('img-loaded')"
@@ -168,7 +142,7 @@
     <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight" style="font-family: 'Montserrat', sans-serif;">Let's Create Your Next Event</h2>
         <p class="text-white/80 mb-10 text-lg sm:text-xl font-medium" style="font-family: 'Inter', sans-serif;">Siap berkolaborasi? Hubungi kami untuk diskusi project Anda.</p>
-        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-[#ff6a00] text-white font-bold rounded-full hover:bg-[#e65c00] transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-lg" style="font-family: 'Montserrat', sans-serif;">
+        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-[#ff6a00] text-white font-bold rounded-full shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-[#e65c00] text-lg" style="font-family: 'Montserrat', sans-serif;">
             Hubungi Kami
         </a>
     </div>

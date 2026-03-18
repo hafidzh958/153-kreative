@@ -5,15 +5,6 @@
 @push('styles')
 <style>
     @verbatim
-    .hover-card-lift {
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-card-lift:hover {
-        transform: translateY(-6px);
-        border-color: #ff6a00;
-        box-shadow: 0 12px 28px -4px rgba(255,106,0,0.15);
-    }
-
     /* Flex Zigzag Layout */
     .service-row {
         display: flex;
@@ -42,21 +33,6 @@
         }
     }
 
-    /* Supporting Services Grid — centered responsive grid */
-    .supporting-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.25rem;
-    }
-    @media (min-width: 640px) {
-        .supporting-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-    @media (min-width: 1024px) {
-        .supporting-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
     }
     @endverbatim
 </style>
@@ -123,10 +99,10 @@
                     <img
                         src="{{ asset('storage/'.$service->image) }}"
                         alt="{{ $service->name }}"
-                        class="max-h-[420px] max-w-[500px] w-auto object-contain rounded-xl shadow-md transition-transform duration-700 group-hover:scale-105"
+                        class="max-h-[420px] max-w-[500px] w-auto object-cover rounded-xl shadow-md transition duration-500 group-hover:scale-110"
                     />
                 @else
-                    <div class="max-h-[420px] max-w-[500px] w-full py-32 bg-gradient-to-br from-orange-50 to-orange-100 flex flex-col items-center justify-center gap-3 rounded-xl shadow-md transition-transform duration-700 group-hover:scale-105">
+                    <div class="max-h-[420px] max-w-[500px] w-full py-32 bg-gradient-to-br from-orange-50 to-orange-100 flex flex-col items-center justify-center gap-3 rounded-xl shadow-md transition duration-500 group-hover:scale-110">
                         <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#ff6a00]/10 rounded-2xl flex items-center justify-center text-[#ff6a00]">
                             {!! $autoIcons[$index % count($autoIcons)] !!}
                         </div>
@@ -185,7 +161,7 @@
 
         <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
             @foreach($supportingServices as $s)
-            <div class="w-[220px] bg-white border border-gray-100 rounded-xl p-5 flex items-center justify-center text-center shadow-sm hover:shadow-md hover:border-orange-400 transition-all duration-300 min-h-[80px]">
+            <div class="w-[220px] bg-white border border-gray-100 rounded-xl p-5 flex items-center justify-center text-center shadow-md transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl hover:border-orange-400 min-h-[80px]">
                 <h4 class="text-base font-semibold text-gray-800 leading-snug" style="font-family: 'Montserrat', sans-serif;">{{ $s->name }}</h4>
             </div>
             @endforeach
@@ -201,7 +177,7 @@
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
             Let's Create Your Next Event With 153 Kreatif
         </h2>
-        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-2 transform text-xl" style="font-family: 'Montserrat', sans-serif;">
+        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full text-xl shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-50" style="font-family: 'Montserrat', sans-serif;">
             Contact Us
         </a>
     </div>

@@ -26,7 +26,7 @@
                 <img
                     src="{{ $about->story_image ? asset('storage/'.$about->story_image) : 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80' }}"
                     alt="{{ $about->story_title ?? 'Tim 153 Kreatif bekerja' }}"
-                    class="w-full h-auto rounded-2xl object-contain shadow-lg border border-gray-100 transition-transform duration-500 group-hover:scale-[1.01]"
+                    class="w-full h-auto rounded-2xl object-cover shadow-lg border border-gray-100 transition duration-500 group-hover:scale-110"
                     style="max-height: 550px;"
                 />
             </div>
@@ -66,7 +66,7 @@
         <div class="grid lg:grid-cols-2 gap-10 scroll-fade">
             
             {{-- Vision Card (Konsisten Kiri) --}}
-            <div class="bg-white p-10 sm:p-14 rounded-3xl shadow-lg border-t-4 border-[#ff6a00] relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+            <div class="bg-white p-10 sm:p-14 rounded-3xl shadow-md border-t-4 border-[#ff6a00] relative overflow-hidden group transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
                 <div class="absolute top-0 right-0 p-8 opacity-5 transform group-hover:scale-110 group-hover:opacity-10 transition-all duration-700">
                     <svg class="w-32 h-32 text-[#ff6a00]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                 </div>
@@ -77,7 +77,7 @@
             </div>
 
             {{-- Mission Card (Konsisten Kanan) --}}
-            <div class="bg-white p-10 sm:p-14 rounded-3xl shadow-lg border-t-4 border-[#ff6a00] relative overflow-hidden hover:-translate-y-1 transition-transform duration-300">
+            <div class="bg-white p-10 sm:p-14 rounded-3xl shadow-md border-t-4 border-[#ff6a00] relative overflow-hidden group transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
                 <h3 class="text-3xl font-bold text-gray-900 mb-8" style="font-family: 'Montserrat', sans-serif;">Misi</h3>
                 <ul class="space-y-6 text-gray-600 text-lg" style="font-family: 'Inter', sans-serif;">
                     @forelse($missions as $mission)
@@ -161,7 +161,7 @@
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
             Let's Create Your Next Event With 153 Kreatif
         </h2>
-        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-2 transform text-xl" style="font-family: 'Montserrat', sans-serif;">
+        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full text-xl shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-50" style="font-family: 'Montserrat', sans-serif;">
             Contact Us
         </a>
     </div>

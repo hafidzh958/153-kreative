@@ -78,7 +78,7 @@
                                 class="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all text-sm outline-none pr-12"
                                 placeholder="••••••••" value="{{ app()->environment('local') ? '153kreatif' : '' }}">
                             <button type="button" onclick="togglePassword()"
-                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors">
+                                class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
                                 <svg id="icon-eye" class="w-5 h-5" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

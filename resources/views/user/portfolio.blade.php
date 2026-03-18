@@ -45,12 +45,8 @@
         aspect-ratio: 4/3;
         object-fit: cover;
         display: block;
-        transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
-    .portfolio-item:hover img {
-        transform: scale(1.05);
-    }
 
     /* ── Overlay ── */
     .portfolio-overlay {
@@ -133,11 +129,11 @@
         
         {{-- Filter Buttons --}}
         <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-16 scroll-fade" id="portfolio-filters">
-            <button class="filter-btn active px-6 py-2.5 rounded-full border-2 border-gray-100 bg-gray-50 text-gray-600 font-semibold hover:border-[#ff6a00] hover:text-[#ff6a00] transition-all duration-300 focus:outline-none" data-filter="all" style="font-family: 'Montserrat', sans-serif;">
+            <button class="filter-btn active px-6 py-2.5 rounded-full border-2 border-gray-100 bg-gray-50 text-gray-600 font-semibold hover:border-[#ff6a00] hover:text-[#ff6a00] transition duration-300 hover:scale-105 hover:shadow-lg focus:outline-none" data-filter="all" style="font-family: 'Montserrat', sans-serif;">
                 All
             </button>
             @foreach($categories as $category)
-                <button class="filter-btn px-6 py-2.5 rounded-full border-2 border-gray-100 bg-gray-50 text-gray-600 font-semibold hover:border-[#ff6a00] hover:text-[#ff6a00] transition-all duration-300 focus:outline-none" data-filter="{{ $category->slug }}" style="font-family: 'Montserrat', sans-serif;">
+                <button class="filter-btn px-6 py-2.5 rounded-full border-2 border-gray-100 bg-gray-50 text-gray-600 font-semibold hover:border-[#ff6a00] hover:text-[#ff6a00] transition duration-300 hover:scale-105 hover:shadow-lg focus:outline-none" data-filter="{{ $category->slug }}" style="font-family: 'Montserrat', sans-serif;">
                     {{ $category->name }}
                 </button>
             @endforeach
@@ -155,14 +151,14 @@
         @else
             <div class="portfolio-wrapper" id="portfolio-grid">
                 @foreach($portfolios as $index => $portfolio)
-                    <div class="portfolio-item scroll-fade"
+                    <div class="portfolio-item scroll-fade group"
                          data-category="{{ $portfolio->category->slug ?? 'uncategorized' }}"
                          data-show-in-all="{{ $portfolio->is_show_in_all ? '1' : '0' }}"
                          style="animation-delay: {{ $index * 0.05 }}s;"
                          onclick="openLightbox('{{ asset('storage/'.$portfolio->image) }}', '{{ addslashes($portfolio->title) }}', '{{ addslashes($portfolio->category->name ?? '') }}')">  
 
                         @if($portfolio->image)
-                            <img src="{{ asset('storage/'.$portfolio->image) }}" alt="{{ $portfolio->title }}" loading="lazy">
+                            <img src="{{ asset('storage/'.$portfolio->image) }}" alt="{{ $portfolio->title }}" loading="lazy" class="transition duration-500 group-hover:scale-110">
                         @else
                             <div style="aspect-ratio:4/3;" class="flex items-center justify-center bg-gray-100 text-gray-400">No Image</div>
                         @endif
@@ -193,7 +189,7 @@
         <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
             Let's Create Your Next Event With 153 Kreatif
         </h2>
-        <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-2 transform text-xl" style="font-family: 'Montserrat', sans-serif;">
+        <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full text-xl shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-50" style="font-family: 'Montserrat', sans-serif;">
             Hubungi Kami
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
