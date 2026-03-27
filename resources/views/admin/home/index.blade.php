@@ -183,6 +183,79 @@
         </div>
     </div>
 
+    {{-- ─── KEY STATISTICS SECTION ────────────────────────────────── --}}
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden mb-8">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-sm font-semibold text-gray-900">Key Statistics (Angka Pencapaian)</h2>
+                <p class="text-xs text-gray-500">Menampilkan 4 angka metrik utama (mis. 150+ Event Sukses)</p>
+            </div>
+        </div>
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-gray-50/50">
+            {{-- Stat 1 --}}
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <h3 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider">Statistik 1</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Angka (e.g. 50+)</label>
+                        <input type="text" name="stat_1_number" value="{{ old('stat_1_number', $home->stat_1_number ?? '150+') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Label (e.g. Event Sukses)</label>
+                        <input type="text" name="stat_1_label" value="{{ old('stat_1_label', $home->stat_1_label ?? 'Event Sukses') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                </div>
+            </div>
+            {{-- Stat 2 --}}
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <h3 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider">Statistik 2</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Angka (e.g. 50+)</label>
+                        <input type="text" name="stat_2_number" value="{{ old('stat_2_number', $home->stat_2_number ?? '50+') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Label (e.g. Klien Puas)</label>
+                        <input type="text" name="stat_2_label" value="{{ old('stat_2_label', $home->stat_2_label ?? 'Klien Perusahaan') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                </div>
+            </div>
+            {{-- Stat 3 --}}
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <h3 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider">Statistik 3</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Angka (e.g. 50+)</label>
+                        <input type="text" name="stat_3_number" value="{{ old('stat_3_number', $home->stat_3_number ?? '10+') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Label (e.g. Tahun Pengalaman)</label>
+                        <input type="text" name="stat_3_label" value="{{ old('stat_3_label', $home->stat_3_label ?? 'Tahun Pengalaman') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                </div>
+            </div>
+            {{-- Stat 4 --}}
+            <div class="bg-white p-4 rounded-xl border border-gray-200">
+                <h3 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider">Statistik 4</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Angka (e.g. 50+)</label>
+                        <input type="text" name="stat_4_number" value="{{ old('stat_4_number', $home->stat_4_number ?? '2M+') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Label (e.g. Audience Reached)</label>
+                        <input type="text" name="stat_4_label" value="{{ old('stat_4_label', $home->stat_4_label ?? 'Audience Reached') }}" class="w-full rounded border-gray-200 px-3 py-2 text-sm focus:ring-[#f97316]">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- ─── SERVICES SECTION (SORTABLE & MODAL) ───────────────────── --}}
     <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden mb-8">
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">

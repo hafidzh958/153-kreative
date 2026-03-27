@@ -90,6 +90,12 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
 
     Route::resource('missions', AdminMissionController::class);
     Route::resource('processes', AdminProcessController::class);
+    
+    // Clients (Mitra)
+    Route::resource('clients', \App\Http\Controllers\Admin\ClientController::class);
+    // Testimonials (Review)
+    Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
+
     // Contact Page Management
     Route::get('contact', [AdminContactController::class, 'index'])->name('contact.index');
     Route::put('contact', [AdminContactController::class, 'update'])->name('contact.update');

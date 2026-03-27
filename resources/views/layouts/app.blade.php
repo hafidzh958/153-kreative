@@ -9,6 +9,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -149,9 +150,16 @@
     </a>
 
     <!-- Global JS Libraries & Helpers -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Global Scroll Fade Animation Observer
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+            });
+
+            // Global Scroll Fade Animation Observer (Legacy fallback)
             const fadeElements = document.querySelectorAll('.scroll-fade, .animate-fade-in-up');
             
             const scrollObserver = new IntersectionObserver((entries) => {

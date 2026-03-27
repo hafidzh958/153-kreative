@@ -27,6 +27,18 @@ class HomeController extends Controller
             'hero_description'      => 'nullable|string',
             'hero_button_text'      => 'required|string|max:255',
             'about_image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            // New fields validation
+            'stat_1_number'         => 'nullable|string|max:255',
+            'stat_1_label'          => 'nullable|string|max:255',
+            'stat_2_number'         => 'nullable|string|max:255',
+            'stat_2_label'          => 'nullable|string|max:255',
+            'stat_3_number'         => 'nullable|string|max:255',
+            'stat_3_label'          => 'nullable|string|max:255',
+            'stat_4_number'         => 'nullable|string|max:255',
+            'stat_4_label'          => 'nullable|string|max:255',
+            'showreel_title'        => 'nullable|string|max:255',
+            'showreel_description'  => 'nullable|string',
+            'showreel_video_url'    => 'nullable|string',
         ]);
 
         $home = HomeSetting::firstOrNew(['id' => 1]);
@@ -38,6 +50,19 @@ class HomeController extends Controller
         $home->hero_button_link = $request->hero_button_link;
         $home->about_title      = $request->about_title;
         $home->about_description = $request->about_description;
+
+        // Assign new fields
+        $home->stat_1_number    = $request->stat_1_number;
+        $home->stat_1_label     = $request->stat_1_label;
+        $home->stat_2_number    = $request->stat_2_number;
+        $home->stat_2_label     = $request->stat_2_label;
+        $home->stat_3_number    = $request->stat_3_number;
+        $home->stat_3_label     = $request->stat_3_label;
+        $home->stat_4_number    = $request->stat_4_number;
+        $home->stat_4_label     = $request->stat_4_label;
+        $home->showreel_title   = $request->showreel_title;
+        $home->showreel_description = $request->showreel_description;
+        $home->showreel_video_url   = $request->showreel_video_url;
 
         if ($request->hasFile('hero_background_image')) {
             if ($home->hero_background_image) {
@@ -59,7 +84,7 @@ class HomeController extends Controller
 
         return redirect()
             ->route('admin.home.index')
-            ->with('success', 'Konten halaman Home (Hero & About) berhasil diperbarui.');
+            ->with('success', 'Konten halaman Home (Hero, About, Stats, Showreel) berhasil diperbarui.');
     }
 
     // ─── SERVICES CRUD ──────────────────────────────────────────────

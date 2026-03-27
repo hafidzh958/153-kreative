@@ -52,7 +52,7 @@
 @endphp
 
 {{-- 1. Header Section --}}
-<section class="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden relative shadow-inner">
+<section class="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden relative">
     @if(isset($settings) && $settings->hero_image)
         <img 
             src="{{ asset('storage/'.$settings->hero_image) }}" 
@@ -64,12 +64,12 @@
         <div class="absolute inset-0 bg-gradient-to-br from-[#ff6a00] to-[#ff8c3a]"></div>
     @endif
     
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+    
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <h1 class="animate-fade-in-up text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
+        <h1 data-aos="fade-up" data-aos-duration="1000" class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 drop-shadow-md" style="font-family: 'Montserrat', sans-serif;">
             {{ $settings->hero_title ?? 'Layanan Kami' }}
         </h1>
-        <p class="animate-fade-in-up delay-1 text-xl sm:text-2xl text-white/90 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family: 'Inter', sans-serif;">
+        <p data-aos="fade-up" data-aos-delay="200" class="text-xl sm:text-2xl text-amber-100 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family: 'Inter', sans-serif;">
             {{ $settings->hero_subtitle ?? 'Integrated Event Solutions & Creative Production' }}
         </p>
     </div>
@@ -77,7 +77,7 @@
 
 {{-- 2. Services Introduction --}}
 <section class="py-16 bg-white border-b border-gray-100">
-    <div class="max-w-4xl mx-auto px-4 text-center scroll-fade">
+    <div data-aos="fade-up" class="max-w-4xl mx-auto px-4 text-center">
         <p class="text-xl md:text-2xl text-gray-700 leading-relaxed font-medium" style="font-family: 'Inter', sans-serif;">
             @if(isset($settings) && $settings->intro_text)
                 {!! nl2br(e($settings->intro_text)) !!}
@@ -91,10 +91,10 @@
 {{-- 3. Main Services (Zig-Zag from DB) --}}
 @forelse($mainServices as $index => $service)
 <section class="py-24 lg:py-32 overflow-hidden {{ $index % 2 === 0 ? 'bg-white' : 'bg-[#fff3ec]' }}">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="service-row {{ $index % 2 !== 0 ? 'reverse' : '' }}">
             {{-- Image --}}
-            <div class="service-img flex justify-center items-center group">
+            <div data-aos="{{ $index % 2 === 0 ? 'fade-right' : 'fade-left' }}" class="service-img flex justify-center items-center group">
                 @if($service->image)
                     <img
                         src="{{ asset('storage/'.$service->image) }}"
@@ -112,11 +112,11 @@
             </div>
 
             {{-- Text --}}
-            <div class="service-text space-y-4">
+            <div data-aos="{{ $index % 2 === 0 ? 'fade-left' : 'fade-right' }}" data-aos-delay="200" class="service-text space-y-4">
                 <div class="inline-flex items-center justify-center w-10 h-10 opacity-80 {{ $index % 2 !== 0 ? 'bg-white shadow-sm' : 'bg-[#fff3ec]' }} rounded-xl text-[#ff6a00]">
                     {!! str_replace('w-7 h-7', 'w-5 h-5', $autoIcons[$index % count($autoIcons)]) !!}
                 </div>
-                <h2 class="text-2xl font-semibold text-gray-900" style="font-family: 'Montserrat', sans-serif;">{{ $service->name }}</h2>
+                <h2 class="text-3xl font-extrabold text-gray-900" style="font-family: 'Montserrat', sans-serif;">{{ $service->name }}</h2>
                 <div class="w-16 h-1 bg-[#ff6a00] rounded-full"></div>
                 @if($service->description)
                     <p class="text-sm text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">
@@ -153,15 +153,15 @@
 {{-- 4. Supporting Services Grid --}}
 @if($supportingServices->count())
 <section class="py-24 lg:py-32 bg-gray-50 border-t border-gray-100">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 scroll-fade">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style="font-family: 'Montserrat', sans-serif;">Layanan Pendukung Lainnya</h2>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div data-aos="fade-up" class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 pb-2" style="font-family: 'Montserrat', sans-serif;">Layanan Pendukung Lainnya</h2>
             <div class="w-16 h-1.5 bg-[#ff6a00] mx-auto rounded-full"></div>
         </div>
 
         <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
-            @foreach($supportingServices as $s)
-            <div class="w-[220px] bg-white border border-gray-100 rounded-xl p-5 flex items-center justify-center text-center shadow-md transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl hover:border-orange-400 min-h-[80px]">
+            @foreach($supportingServices as $index => $s)
+            <div data-aos="fade-up" data-aos-delay="{{ ($index % 4) * 100 }}" class="w-[220px] bg-white border border-gray-100 rounded-xl p-5 flex items-center justify-center text-center shadow-md transition duration-300 ease-in-out hover:scale-[1.05] hover:shadow-[0_10px_25px_-5px_rgba(255,106,0,0.2)] hover:border-orange-300 min-h-[80px]">
                 <h4 class="text-base font-semibold text-gray-800 leading-snug" style="font-family: 'Montserrat', sans-serif;">{{ $s->name }}</h4>
             </div>
             @endforeach
@@ -171,14 +171,14 @@
 @endif
 
 {{-- 5. Call To Action Section --}}
-<section class="py-24 lg:py-32 bg-gradient-to-r from-[#ff6a00] to-[#ff8c3a] shadow-inner relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center scroll-fade">
-        <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
+<section class="py-24 lg:py-32 bg-gradient-to-br from-white to-[#ffe6d6] relative overflow-hidden border-b border-orange-100">
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <h2 data-aos="fade-up" class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-12 leading-tight drop-shadow-sm pb-2" style="font-family: 'Montserrat', sans-serif;">
             Let's Create Your Next Event With 153 Kreatif
         </h2>
-        <a href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full text-xl shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-50" style="font-family: 'Montserrat', sans-serif;">
-            Contact Us
+        <a data-aos="zoom-in" data-aos-delay="200" href="{{ route('contact') }}" class="inline-block px-10 py-4 bg-gradient-to-r from-[#ff6a00] to-[#ff8c3a] text-white font-bold rounded-full text-xl shadow-[0_4px_14px_0_rgba(255,106,0,0.39)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(255,106,0,0.23)] hover:from-[#e65c00] hover:to-[#ff6a00]" style="font-family: 'Montserrat', sans-serif;">
+            Hubungi Kami
         </a>
     </div>
 </section>

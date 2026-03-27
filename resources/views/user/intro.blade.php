@@ -13,19 +13,16 @@
         }
         body {
             min-height: 100vh;
-            background: #000;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 60%, #fff0e5 85%, #ff8c40 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
-        .intro-text {
-            color: #fff;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            white-space: nowrap;
+        .intro-logo {
+            height: auto;
+            width: clamp(150px, 30vw, 300px);
+            object-fit: contain;
             opacity: 0;
             transform: scale(0.9);
             animation: fadeInScale 0.8s ease-out forwards, fadeOut 0.2s 1.1s ease-in forwards;
@@ -54,7 +51,7 @@
     </style>
 </head>
 <body>
-    <h1 class="intro-text" style="font-family: 'Montserrat', sans-serif;">153 Kreatif</h1>
+    <img src="{{ asset('assets/img/153.png') }}" alt="153 Kreatif Logo" class="intro-logo">
 
     <script>
         (function () {

@@ -111,13 +111,13 @@
 @section('content')
 
 {{-- 1. Header Section --}}
-<section class="pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-[#fff3ec] to-[#ffe6d6] overflow-hidden relative shadow-inner">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#ff6a00] to-transparent"></div>
+<section class="pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-[#fff3ec] to-[#ffe6d6] overflow-hidden relative">
+    
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <h1 class="animate-fade-in-up text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
+        <h1 data-aos="fade-up" data-aos-duration="1000" class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 drop-shadow-sm pb-2" style="font-family: 'Montserrat', sans-serif;">
             {{ $settings->hero_title ?? 'Portofolio Kami' }}
         </h1>
-        <p class="animate-fade-in-up delay-1 text-xl sm:text-2xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family: 'Inter', sans-serif;">
+        <p data-aos="fade-up" data-aos-delay="200" class="text-xl sm:text-2xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family: 'Inter', sans-serif;">
             {!! nl2br(e($settings->hero_subtitle ?? 'Beberapa dokumentasi proyek event, pameran, dan aktivasi brand yang telah kami tangani dengan sepenuh hati.')) !!}
         </p>
     </div>
@@ -128,7 +128,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {{-- Filter Buttons --}}
-        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-16 scroll-fade" id="portfolio-filters">
+        <div data-aos="fade-up" class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-16" id="portfolio-filters">
             <button class="filter-btn active px-6 py-2.5 rounded-full border-2 border-gray-100 bg-gray-50 text-gray-600 font-semibold hover:border-[#ff6a00] hover:text-[#ff6a00] transition duration-300 hover:scale-105 hover:shadow-lg focus:outline-none" data-filter="all" style="font-family: 'Montserrat', sans-serif;">
                 All
             </button>
@@ -183,13 +183,13 @@
 </section>
 
 {{-- 3. Call To Action Section --}}
-<section class="py-24 lg:py-32 bg-gradient-to-r from-[#ff6a00] to-[#ff8c3a] shadow-inner relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center scroll-fade">
-        <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-12 leading-tight drop-shadow-sm" style="font-family: 'Montserrat', sans-serif;">
+<section class="py-24 lg:py-32 bg-gradient-to-br from-white to-[#ffe6d6] relative overflow-hidden border-b border-orange-100">
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <h2 data-aos="fade-up" class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-12 leading-tight drop-shadow-sm pb-2" style="font-family: 'Montserrat', sans-serif;">
             Let's Create Your Next Event With 153 Kreatif
         </h2>
-        <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#ff6a00] font-bold rounded-full text-xl shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-50" style="font-family: 'Montserrat', sans-serif;">
+        <a data-aos="zoom-in" data-aos-delay="200" href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-[#ff6a00] to-[#ff8c3a] text-white font-bold rounded-full text-xl shadow-[0_4px_14px_0_rgba(255,106,0,0.39)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(255,106,0,0.23)] hover:from-[#e65c00] hover:to-[#ff6a00]" style="font-family: 'Montserrat', sans-serif;">
             Hubungi Kami
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>

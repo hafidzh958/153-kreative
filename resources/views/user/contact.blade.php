@@ -73,15 +73,15 @@
 @section('content')
 
 {{-- 1. HERO --}}
-<section class="pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-[#fff3ec] to-[#ffe6d6] overflow-hidden relative shadow-inner">
+<section class="pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-[#fff3ec] to-[#ffe6d6] overflow-hidden relative">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <h1 class="animate-fade-in-up text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 drop-shadow-sm" style="font-family:'Montserrat',sans-serif;">
+        <h1 data-aos="fade-up" data-aos-duration="1000" class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 drop-shadow-sm pb-2" style="font-family:'Montserrat',sans-serif;">
             {{ $contact->hero_title ?? 'Hubungi Kami' }}
         </h1>
-        @if($contact->hero_subtitle)
-            <p class="animate-fade-in-up delay-1 text-xl sm:text-2xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family:'Inter',sans-serif;">
+        @if(!empty(trim($contact->hero_subtitle)))
+            <p data-aos="fade-up" data-aos-delay="200" class="text-xl sm:text-2xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed" style="font-family:'Inter',sans-serif;">
                 {{ $contact->hero_subtitle }}
             </p>
         @endif
@@ -94,21 +94,16 @@
         <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
 
             {{-- KIRI: Teks CTA --}}
-            <div class="scroll-fade">
-                @if($contact->cta_title)
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight" style="font-family:'Montserrat',sans-serif;">
+            <div data-aos="fade-right">
+                @if(!empty(trim($contact->cta_title)))
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight pb-2" style="font-family:'Montserrat',sans-serif;">
                         {{ $contact->cta_title }}
-                        @if($contact->cta_description)
-                            <br><span class="text-[#ff6a00]">{{ Str::words($contact->cta_description, 4, '') }}</span>
+                        @if(!empty(trim($contact->cta_description)))
+                            <br><span class="text-[#ff6a00]">{{ $contact->cta_description }}</span>
                         @endif
                     </h2>
-                    @if($contact->cta_description)
-                        <p class="text-lg text-gray-600 leading-relaxed" style="font-family:'Inter',sans-serif;">
-                            {{ $contact->cta_description }}
-                        </p>
-                    @endif
                 @else
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight" style="font-family:'Montserrat',sans-serif;">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight pb-2" style="font-family:'Montserrat',sans-serif;">
                         Punya Ide Brilian?<br>
                         <span class="text-[#ff6a00]">Mari bicarakan.</span>
                     </h2>
@@ -132,7 +127,7 @@
                             <div class="w-9 h-9 bg-orange-50 rounded-full flex items-center justify-center flex-shrink-0">
                                 <svg class="w-4 h-4 text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                             </div>
-                            <span class="font-medium">{{ $contact->email }}</span>
+                            <span class="font-medium break-all">{{ $contact->email }}</span>
                         </div>
                     @endif
                     @if($contact->address)
@@ -147,7 +142,7 @@
             </div>
 
             {{-- KANAN: Contact Card --}}
-            <div class="cta-card p-8 lg:p-10 scroll-fade delay-1 text-center flex flex-col justify-center min-h-[380px]">
+            <div data-aos="fade-left" data-aos-delay="200" class="cta-card p-8 lg:p-10 text-center flex flex-col justify-center min-h-[380px]">
                 <div class="w-20 h-20 bg-[#fff3ec] rounded-full flex items-center justify-center mx-auto mb-6 text-[#ff6a00]">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
@@ -188,13 +183,13 @@
 
 {{-- 3. INFO CARDS (3 kolom horizontal, di bawah CTA) --}}
 @if($contact->address || $contact->email || $contact->phone || $contact->whatsapp)
-<section class="pb-24 lg:pb-32 bg-[#f9fafb]">
+<section class="py-24 lg:py-32 bg-gradient-to-b from-white to-[#fff3ec]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {{-- Card: Alamat --}}
             @if($contact->address)
-            <div class="info-card p-7 text-center scroll-fade transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
+            <div data-aos="fade-up" data-aos-delay="100" class="info-card p-7 text-center transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
                 <div class="info-icon-bg w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-5">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -208,14 +203,14 @@
 
             {{-- Card: Email --}}
             @if($contact->email)
-            <div class="info-card p-7 text-center scroll-fade delay-1 transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
+            <div data-aos="fade-up" data-aos-delay="200" class="info-card p-7 text-center transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
                 <div class="info-icon-bg w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-5">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                 </div>
                 <h3 class="text-base font-bold text-gray-900 mb-2" style="font-family:'Montserrat',sans-serif;">Email</h3>
-                <p class="text-sm" style="font-family:'Inter',sans-serif;">
+                <p class="text-sm break-all" style="font-family:'Inter',sans-serif;">
                     <a href="mailto:{{ $contact->email }}" class="text-gray-500 hover:text-[#ff6a00] transition-colors">{{ $contact->email }}</a>
                 </p>
             </div>
@@ -223,7 +218,7 @@
 
             {{-- Card: Telepon / WhatsApp --}}
             @if($contact->phone || $contact->whatsapp)
-            <div class="info-card p-7 text-center scroll-fade delay-2 transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
+            <div data-aos="fade-up" data-aos-delay="300" class="info-card p-7 text-center transition duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl">
                 <div class="info-icon-bg w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-5">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -244,33 +239,33 @@
 
 {{-- 4. MAP (tampil jika ada latitude/longitude ATAU map_link) --}}
 @if($contact->latitude && $contact->longitude || $contact->map_link)
-<section class="pb-24 lg:pb-32 bg-white">
+<section class="py-24 lg:py-32 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10 scroll-fade">
-            <h2 class="text-3xl font-bold text-gray-900" style="font-family:'Montserrat',sans-serif;">Lokasi Kami</h2>
+        <div data-aos="fade-up" class="text-center mb-10">
+            <h2 class="text-3xl font-extrabold text-gray-900 pb-2" style="font-family:'Montserrat',sans-serif;">Lokasi Kami</h2>
             <div class="w-16 h-1 bg-[#ff6a00] mx-auto mt-4 rounded-full"></div>
         </div>
 
         @php
-            // Prioritas 1: lat/lng → embed langsung
-            // Prioritas 2: map_link google.com/maps → coba embed
-            // Fallback: tampilkan placeholder + tombol saja
+            $openUrl = $contact->map_link ?? null;
             $embedSrc = null;
-            $openUrl   = $contact->map_link ?? null;
 
             if ($contact->latitude && $contact->longitude) {
                 $embedSrc = 'https://www.google.com/maps?q=' . $contact->latitude . ',' . $contact->longitude . '&output=embed';
-                // Jika tidak ada map_link, buat link buka maps dari lat/lng
                 if (!$openUrl) {
                     $openUrl = 'https://www.google.com/maps?q=' . $contact->latitude . ',' . $contact->longitude;
                 }
-            } elseif ($contact->map_link && str_contains($contact->map_link, 'google.com/maps')) {
-                $sep      = str_contains($contact->map_link, '?') ? '&' : '?';
-                $embedSrc = $contact->map_link . $sep . 'output=embed';
+            } else {
+                // Selalu tampilkan map menggunakan text alamat jika lat/lng kosong
+                $addressStr = strip_tags($contact->address ?? 'Jakarta, Indonesia');
+                $embedSrc = 'https://www.google.com/maps?q=' . urlencode($addressStr) . '&output=embed';
+                if (!$openUrl) {
+                    $openUrl = 'https://www.google.com/maps?q=' . urlencode($addressStr);
+                }
             }
         @endphp
 
-        <div class="scroll-fade">
+        <div data-aos="fade-up" data-aos-delay="200">
             @if($embedSrc)
                 {{-- Embedded Map iframe --}}
                 <div class="overflow-hidden shadow-xl border border-gray-100 mb-6 transition duration-300 hover:scale-[1.02] hover:shadow-2xl"
