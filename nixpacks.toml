@@ -28,10 +28,14 @@ cmds = [
 
 [phases.build]
 cmds = [
-    "php artisan storage:link --force",
-    "php artisan migrate --force --no-interaction",
-    "php artisan db:seed --force --no-interaction",
-    "php artisan config:cache",
-    "php artisan route:cache",
-    "php artisan view:cache"
+  "composer install --no-dev --optimize-autoloader",
+  "npm install && npm run build",
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache",
+  "php artisan migrate --force",
+  "php artisan storage:link"
 ]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
