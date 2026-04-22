@@ -17,12 +17,14 @@ nixPkgs = [
 ]
 
 [phases.install]
+dependsOn = ["setup"]
 cmds = [
     "composer install --no-dev --optimize-autoloader --no-interaction",
-    "npm ci"
+    "npm install"
 ]
 
 [phases.build]
+dependsOn = ["install"]
 cmds = [
     "npm run build"
 ]
