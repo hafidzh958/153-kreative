@@ -65,7 +65,7 @@
 }
 
 /* Layout shell — no global reset (conflicts with Tailwind) */
-html,body{height:100%;overflow:hidden}
+html,body{height:100vh;height:100dvh;overflow:hidden}
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
   background:var(--bg);
@@ -135,7 +135,7 @@ body{
 /* ── SIDEBAR ────────────────────────────── */
 #f-side{
   position:fixed;left:0;top:var(--th);
-  width:var(--sw);height:calc(100vh - var(--th));
+  width:var(--sw);height:calc(100vh - var(--th));height:calc(100dvh - var(--th));
   z-index:200;
   background:rgba(255,255,255,.78);
   backdrop-filter:saturate(180%) blur(24px);
@@ -207,12 +207,12 @@ body{
 /* ── MAIN ───────────────────────────────── */
 #f-main{
   margin-left:var(--sw);margin-top:var(--th);
-  height:calc(100vh - var(--th));overflow-y:auto;
+  height:calc(100vh - var(--th));height:calc(100dvh - var(--th));overflow-y:auto;
   position:relative;z-index:1;
 }
 #f-main::-webkit-scrollbar{width:4px}
 #f-main::-webkit-scrollbar-thumb{background:var(--sep-opaque);border-radius:4px}
-.f-page{padding:28px 32px;min-height:calc(100vh - var(--th));max-width:1400px;margin:0 auto}
+.f-page{padding:28px 32px;min-height:calc(100vh - var(--th));min-height:calc(100dvh - var(--th));max-width:1400px;margin:0 auto}
 
 /* ── PAGE HEADER ────────────────────────── */
 .page-hd{margin-bottom:24px}
@@ -493,7 +493,7 @@ body{
   .f-overlay.open{opacity:1;pointer-events:all}
   .f-top-center{display:none}
   #f-main{margin-left:0}
-  .f-page{padding:16px}
+  .f-page{padding:16px;padding-bottom:120px}
   .g2,.g3,.g4{grid-template-columns:1fr;gap:12px}
   .gc2,.gc3,.gc4{grid-column:span 1}
   .row-between{flex-direction:column;align-items:flex-start}

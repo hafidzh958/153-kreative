@@ -77,7 +77,8 @@
 
         /* Layout shell — do NOT reset margin/padding globally (conflicts with Tailwind) */
         html, body {
-            height: 100%;
+            height: 100vh;
+            height: 100dvh;
             overflow: hidden;  /* prevent body scroll — only #admin-content scrolls */
         }
 
@@ -155,6 +156,7 @@
             top: var(--topbar-h);
             width: var(--sidebar-w);
             height: calc(100vh - var(--topbar-h));
+            height: calc(100dvh - var(--topbar-h));
             z-index: 200;
             background: rgba(255, 255, 255, 0.72);
             backdrop-filter: saturate(180%) blur(24px);
@@ -287,8 +289,8 @@
             margin-left: var(--sidebar-w);
             margin-top: 52px;
             margin-top: var(--topbar-h);
-            height: calc(100vh - 52px);
             height: calc(100vh - var(--topbar-h));
+            height: calc(100dvh - var(--topbar-h));
             overflow-y: auto;
             transition: margin-left 0.28s var(--ease);
         }
@@ -301,8 +303,8 @@
 
         .admin-main {
             padding: 24px;
-            min-height: calc(100vh - 52px);
             min-height: calc(100vh - var(--topbar-h));
+            min-height: calc(100dvh - var(--topbar-h));
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -337,6 +339,7 @@
             }
             .admin-main {
                 padding: 16px;
+                padding-bottom: 120px;
             }
         }
 
