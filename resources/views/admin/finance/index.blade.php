@@ -105,7 +105,7 @@
   </div>
 
   {{-- Chart + Recent Invoices --}}
-  <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:24px">
+  <div class="g-main">
     <div class="card">
       <div class="card-hd">
         <div>
