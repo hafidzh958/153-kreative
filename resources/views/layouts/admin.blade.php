@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Admin') - {{ config('app.name') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/153.png') }}">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
