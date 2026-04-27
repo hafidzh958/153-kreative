@@ -214,15 +214,9 @@
             </div>
             <p class="text-gray-600 mb-6 italic leading-relaxed flex-1">"{{ $testi->quote }}"</p>
             <div class="flex items-center gap-4 mt-auto">
-                @if($testi->client_photo)
-                <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
-                    <img src="{{ asset('storage/'.$testi->client_photo) }}" alt="{{ $testi->client_name }}" class="w-full h-full object-cover">
+                <div class="w-12 h-12 bg-gray-100 rounded-full border-2 border-white shadow-sm flex items-center justify-center text-gray-400 flex-shrink-0 overflow-hidden">
+                    <svg class="w-8 h-8 mt-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
-                @else
-                <div class="w-12 h-12 bg-orange-100 rounded-full border-2 border-white shadow-sm flex items-center justify-center text-orange-600 font-bold text-lg flex-shrink-0">
-                    {{ substr($testi->client_name, 0, 1) }}
-                </div>
-                @endif
                 <div>
                     <h5 class="font-bold text-gray-900" style="font-family: 'Montserrat', sans-serif;">{{ $testi->client_name }}</h5>
                     <p class="text-sm text-[#ff6a00] font-medium">{{ $testi->client_position ?? 'Client' }}</p>

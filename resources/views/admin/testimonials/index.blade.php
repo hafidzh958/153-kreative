@@ -26,13 +26,9 @@
                 </div>
 
                 <div class="flex items-center gap-4 mb-4">
-                    @if($testimonial->client_photo)
-                        <img src="{{ asset('storage/'.$testimonial->client_photo) }}" alt="Photo" class="w-12 h-12 rounded-full object-cover">
-                    @else
-                        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-lg">
-                            {{ substr($testimonial->client_name, 0, 1) }}
-                        </div>
-                    @endif
+                    <div class="w-12 h-12 bg-gray-100 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 overflow-hidden">
+                        <svg class="w-8 h-8 mt-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
                     <div>
                         <h4 class="font-bold text-sm text-gray-900">{{ $testimonial->client_name }}</h4>
                         <p class="text-xs text-gray-500">{{ $testimonial->client_position ?? 'Client' }}</p>
@@ -85,11 +81,6 @@
                     <textarea name="quote" id="client_quote" rows="4" class="w-full rounded-lg border px-3 py-2 text-sm focus:ring-[#f97316]" required></textarea>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium mb-1">Foto Klien (Opsional)</label>
-                    <input type="file" name="client_photo" id="client_photo" accept="image/*" class="w-full text-sm border rounded-lg p-2">
-                    <p class="text-xs text-gray-400 mt-1" id="photo_help"></p>
-                </div>
 
                 <div class="flex items-center gap-2 mt-4 inline-flex">
                     <input type="checkbox" name="is_visible" id="client_visible" checked class="rounded border-gray-300 text-[#f97316] focus:ring-[#f97316]">
@@ -122,11 +113,9 @@
         if (id) {
             form.action = `/admin/testimonials/${id}`;
             document.getElementById('formMethod').value = 'PUT';
-            document.getElementById('photo_help').innerText = 'Abaikan jika tidak ingin mengubah foto.';
         } else {
             form.action = `{{ route('admin.testimonials.store') }}`;
             document.getElementById('formMethod').value = 'POST';
-            document.getElementById('photo_help').innerText = 'Ukuran square (1:1) disarankan.';
         }
         
         document.getElementById('testiModal').classList.remove('hidden');
